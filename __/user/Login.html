@@ -1,0 +1,92 @@
+<div class="Login">
+  <!--<div class="username"></div>-->
+  <div class="username">
+    <input type="text" id="username" bind:value=username on:keydown="__keydown__input(event, username)">
+    <label for="username">Username</label>
+  </div>
+  <div class="buttons">
+    <button disabled={{disabled__buttons}} on:click="__click__setname(event, username)">Sign In</button>
+  </div>
+  <!--<div class="password">-->
+    <!--<input type="password" id="password" bind:value=password>-->
+    <!--<label for="password">Password</label>-->
+  <!--</div>-->
+  <!--<div class="buttons">-->
+    <!--<button disabled={{disabled__buttons}} on:click=__click__signin(event)>Sign In</button><br>-->
+    <!--or<br>-->
+    <!--<button disabled={{disabled__buttons}} on:click=__click__signup(event)>Sign Up</button>-->
+  <!--</div>-->
+  <!--{{#if err}}-->
+    <!--<div class="error">-->
+      <!--{{err}}-->
+    <!--</div>-->
+  <!--{{/if}}-->
+</div>
+
+<style type="text/scss" lang="sass">
+  @import './__/input/input.scss';
+  .Login {
+    padding: 0 0.4rem;
+    .buttons {
+      text-align: center;
+      button {
+        width: 100%;
+      }
+    }
+    .error {
+      padding: 0.4rem;
+      background: #FFF0F0;
+    }
+  }
+</style>
+
+<script>
+  import {$agent__gun} from '__/gun/store.mjs'
+  export default {
+    data() {
+      return {
+        username: '',
+        password: ''
+      }
+    },
+    oncreate() {
+      $agent__gun(this.store)
+    },
+    computed: {
+      disabled__buttons: username =>
+        !username
+//      disabled__buttons: (username, password) =>
+//        !username || !password
+    },
+    methods: {
+      __keydown__input(event, username) {
+        if (event.key === 'Enter') {
+          this.store.set({username: username})
+        }
+      },
+      __click__setname(event, username) {
+        this.store.set({username: username})
+      },
+      __click__signup(event) {
+        this.auth('create')
+      },
+      __click__signin(event) {
+        this.auth('auth')
+      },
+      auth(method) {
+        const gun = this.store.get('gun')
+        const {username, password} = this.get()
+        const user = gun.user()
+        user[method](username, password, ack => {
+          const {err} = ack
+          if (err) {
+            this.set({err})
+            return
+          }
+          console.info('auth|debug|1', {ack, user})
+          this.store.set({user, userid: ack.alias})
+        })
+      }
+    }
+  }
+</script>

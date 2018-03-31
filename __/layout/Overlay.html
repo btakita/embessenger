@@ -1,0 +1,73 @@
+<div class="handle {{class__open}}" on:click=__click__handle(event)>
+  Messaging
+</div>
+
+<div class="sidebar {{class__open}}">
+  <Sidebar></Sidebar>
+</div>
+
+{{#if $selected_group && handle_open}}
+  <div class="message">
+    <Message></Message>
+  </div>
+{{/if}}
+
+<style type="text/scss" lang="sass">
+  .handle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    user-select: none;
+    height: calc(2rem + 1.5rem - 1px);
+    line-height: calc(2rem + 1.5rem - 1px);
+    text-align: left;
+    vertical-align: center;
+    width: 200px;
+    padding: 0 1rem;
+    font-weight: bold;
+    background: transparent;
+  }
+  .sidebar {
+    display: none;
+    position: absolute;
+    top: calc(2rem + 1.5rem + 1px);
+    right: 0;
+    min-width: 200px;
+    max-width: 200px;
+    height: 100%;
+    overflow: auto;
+    border-left: 1px solid rgba(0,0,0,0.4);
+    z-index: 1000;
+    &.open {
+      display: block;
+    }
+  }
+  .message {
+    position: absolute;
+    bottom: 0;
+    border-bottom: 1px dotted rgba(0,0,0,0.4);
+    right: calc(200px + 2rem);
+    height: 400px;
+    width: 300px;
+  }
+</style>
+
+<script>
+  import Sidebar from '__/layout/Sidebar.html'
+  import Message from '__/conversation/Message.html'
+  export default {
+    computed: {
+      class__open: handle_open =>
+        handle_open ? 'open' : ''
+    },
+    methods: {
+      __click__handle(event) {
+        this.set({handle_open: !this.get('handle_open')})
+      }
+    },
+    components: {
+      Sidebar,
+      Message
+    }
+  }
+</script>

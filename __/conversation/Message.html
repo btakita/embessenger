@@ -1,0 +1,122 @@
+<div class="Message">
+  <header>{{$selected_group_title}}</header>
+  <div ref:content class="content">
+    {{#if $messages__selected_channel}}
+      {{#each $messages__selected_channel as message}}
+        <div class="message">
+          <!--<div class="close" on:click="__click__close(event, message)">&#10006;</div>-->
+          <span class="who">{{message.who}}: </span>
+          <span class="what">{{message.what}}</span>
+        </div>
+      {{/each}}
+    {{/if}}
+  </div>
+  <div class="input">
+    <input
+      type="text"
+      placeholder="Type a message"
+      on:keydown="__keydown__input(event)"
+      bind:value=$text__message
+    >
+  </div>
+</div>
+
+<style type="text/scss" lang="sass">
+  .Message {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(0,0,0,0.2);
+    border-bottom: none;
+    header {
+      flex: 0;
+      min-height: 2rem;
+      max-height: 2rem;
+      padding: 0.4rem;
+      background: rgba(0,0,0,0.2);
+      font-weight: bold;
+      color: white;
+      text-overflow: ellipsis;
+    }
+    .content {
+      flex: 1;
+      background: white;
+      height: 100%;
+      overflow-y: auto;
+      .message {
+        cursor: pointer;
+        position: relative;
+        list-style-type: none;
+        padding: 0.4rem;
+        z-index: 1;
+        /*.close {*/
+          /*position: absolute;*/
+          /*top: 0;*/
+          /*right: 2px;*/
+        /*}*/
+        .who {
+          font-weight: bold;
+        }
+      }
+    }
+    .input {
+      flex: 0;
+      width: 100%;
+      input {
+        width: 100%;
+        padding: 0.4rem;
+        border: none;
+        border-top: 1px solid rgba(0,0,0,0.2);
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+</style>
+
+<script>
+  import {$agent__conversation} from '__/conversation/store.mjs'
+  import {$agent__groups} from '__/groups/store.mjs'
+  import {$agent__channels} from '__/channels/store.mjs'
+  export default {
+    oncreate() {
+      $agent__conversation(this.store)
+      $agent__groups(this.store)
+      $agent__channels(this.store)
+      this.store.observe('messages__selected_channel', () => this.refresh__content())
+    },
+    methods: {
+      refresh__content() {
+        setTimeout(() => {
+          const {content} = this.refs
+          console.debug('content|debug|1', {content, 'this.refs': this.refs})
+          if (content) content.scrollTop = content.scrollHeight
+        }, 0)
+      },
+      __keydown__input(event) {
+        if (event.key === 'Enter') {
+          const currentTarget = event.currentTarget
+          console.info('currentTarget|debug|1', currentTarget)
+          const {value} = currentTarget
+          this.store.set({text__message: ''})
+          console.info('currentTarget|debug|2', currentTarget)
+          const {username} = this.store.get()
+          const selected_channel_id = this.store.get('selected_channel_id')
+          this.store.push__messages__selected_channel(selected_channel_id, {
+            who: username || 'Anonymous',
+            what: value,
+            when: Gun.time.is()
+          })
+        }
+      },
+      __click__close(event, message) {
+        console.debug('__click__close')
+        console.debug(message._['#'])
+      }
+    }
+  }
+</script>

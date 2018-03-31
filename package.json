@@ -1,0 +1,39 @@
+{
+  "name": "TODO",
+  "description": "TODO",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "sapper dev",
+    "build": "sapper build",
+    "export": "sapper export",
+    "start": "sapper start",
+    "cy:run": "cypress run",
+    "cy:open": "cypress open",
+    "test": "run-p --race dev cy:run",
+    "component": "webpack -c $(pwd)/webpack/component.config.js",
+    "preinstall": "ln -sf $(pwd)/__ $(pwd)/node_modules",
+    "postinstall": "ln -sf $(pwd)/__ $(pwd)/node_modules"
+  },
+  "dependencies": {
+    "buble": "^0.19.3",
+    "buble-loader": "^0.5.0",
+    "compression": "^1.7.2",
+    "module-alias": "^2.0.6",
+    "node-sass": "^4.8.3",
+    "nodent": "^3.1.7",
+    "nodent-loader": "^1.2.6",
+    "npm-run-all": "^4.1.2",
+    "polka": "^0.3.4",
+    "sapper": "^0.10.2",
+    "serve-static": "^1.13.2",
+    "svelte": "^1.60.0",
+    "svelte-loader": "^2.6.0",
+    "svelte-preprocess-sass": "^0.1.0",
+    "webpack": "^4.4.1",
+    "webpack-cli": "^2.0.13",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "_moduleAliases": {
+    "core": "core"
+  }
+}

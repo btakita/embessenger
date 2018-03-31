@@ -1,0 +1,106 @@
+<div class="Groups">
+  <div class="query">
+    <input
+      type="text"
+      on:change=__change__input(event)
+      on:keyup=__change__input(event)
+    >
+  </div>
+  <ul class="results">
+    {{#if groups__query}}
+      {{#each groups__query as group,i @id}}
+        <li
+          class="{{selected_id === group.id ? 'selected' : ''}}"
+          on:click="__click__li(event, group)"
+        >{{group.attributes.title}}</li>
+      {{/each}}
+    {{/if}}
+  </ul>
+</div>
+
+<style type="text/scss" lang="sass">
+  @import './__/input/input.scss';
+  .Groups {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .query {
+    height: calc(1.5rem + 0.8rem);
+    width: 100%;
+    input {
+      width: 100%;
+      border: none;
+      border-bottom: 1px dotted rgba(0,0,0,0.8);
+      padding: 0.4rem;
+      line-height: 1.5rem;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+  .results {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    list-style-type: none;
+    overflow-wrap: break-word;
+    li {
+      padding: 0.4rem;
+      cursor: pointer;
+      user-select: none;
+      &.selected {
+        background: rgba(0,0,0,0.2);
+      }
+    }
+  }
+</style>
+
+<script>
+  export default {
+    async oncreate() {
+      if (typeof window === 'object') {
+        const response = await fetch(`/groups.json`)
+        const __groups = await response.json()
+        this.set({__groups})
+      }
+    },
+    computed: {
+      selected_id: $selected_group =>
+        $selected_group && $selected_group.id,
+      groups__query: (groups, query) =>
+        $groups__query(groups, query),
+      groups: __groups =>
+        (__groups && __groups.data) || []
+    },
+    methods: {
+      reset() {
+        this.store.set({selected_group: null})
+      },
+      __change__input(event) {
+        const {currentTarget} = event
+        this.set({query: currentTarget.value})
+      },
+      __click__li(event, group) {
+        this.store.set({
+          selected_group:
+            this.store.get('selected_group') == group
+            ? null
+            : group
+        })
+      }
+    }
+  }
+  function $groups__query(groups, query) {
+    if (!query) return groups
+    const groups__query = []
+    for (let i=0; i < groups.length; i++) {
+      const group = groups[i]
+      if (group.attributes.title.indexOf(query) > -1) {
+        groups__query.push(group)
+      }
+    }
+    return groups__query
+  }
+</script>

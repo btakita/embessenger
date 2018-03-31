@@ -1,0 +1,20 @@
+<:Head>
+	<title>About</title>
+</:Head>
+
+<Layout page='about'>
+	<h1>About this site</h1>
+
+	<p>This is the 'about' page. There's not much here.</p>
+</Layout>
+
+<script>
+	import Layout from '__/layout/Layout.html'
+  import {Store} from 'svelte/store'
+	export default {
+    store: () => new Store(),
+		components: {
+			Layout
+		}
+	}
+</script>

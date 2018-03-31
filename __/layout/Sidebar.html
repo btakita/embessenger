@@ -1,0 +1,18 @@
+<:Component {show}></:Component>
+
+<script>
+  import Groups from '__/channels/Groups.html'
+  import Login from '__/user/Login.html'
+  export default {
+    computed: {
+      show: $username =>
+        $username ? Groups : Login
+//      show: $user =>
+//        Groups
+    },
+    components: {
+      Groups,
+      Login
+    }
+  }
+</script>

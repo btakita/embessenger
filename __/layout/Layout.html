@@ -1,0 +1,33 @@
+<Nav page={{page}} />
+
+<main>
+  <div class="content">
+    <slot></slot>
+  </div>
+</main>
+
+<Overlay></Overlay>
+
+<style type="text/scss" lang="sass">
+  main {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 2rem - 1.5rem - 1px - 1rem);
+    .content {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+<script>
+  import Nav from '__/layout/Nav.html'
+  import Overlay from '__/layout/Overlay.html'
+  export default {
+    components: {
+      Nav,
+      Overlay
+    }
+  }
+</script>
