@@ -41,7 +41,7 @@
 </style>
 
 <script>
-  import {$agent__gun} from '__/gun/store.mjs'
+  import {__gun} from '__/gun/store.mjs'
   export default {
     data() {
       return {
@@ -50,7 +50,7 @@
       }
     },
     oncreate() {
-      $agent__gun(this.store)
+      __gun(this.store)
     },
     computed: {
       disabled__buttons: username =>

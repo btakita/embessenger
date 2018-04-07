@@ -79,14 +79,14 @@
 </style>
 
 <script>
-  import {$agent__conversation} from '__/conversation/store.mjs'
-  import {$agent__groups} from '__/groups/store.mjs'
-  import {$agent__channels} from '__/channels/store.mjs'
+  import {__conversation} from '__/conversation/store.mjs'
+  import {__groups} from '__/groups/store.mjs'
+  import {__channels} from '__/channels/store.mjs'
   export default {
     oncreate() {
-      $agent__conversation(this.store)
-      $agent__groups(this.store)
-      $agent__channels(this.store)
+      __conversation(this.store)
+      __groups(this.store)
+      __channels(this.store)
       this.store.observe('messages__selected_channel', () => this.refresh__content())
     },
     methods: {

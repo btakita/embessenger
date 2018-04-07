@@ -1,5 +1,5 @@
-export function $agent__user(store) {
-  if (store.agent__user) return store.agent__user
-  store.agent__user = {store}
-  return store.agent__user
+export function __user(store) {
+  if (store.__user) return store
+  store.__user = __user
+  return store
 }
