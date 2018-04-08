@@ -1,7 +1,8 @@
+import {compute} from '../store/lib.mjs'
 export function __groups(store) {
   if (store.__groups) return store
   store.__groups = __groups
-  store.compute('selected_group_title', ['selected_group'],
-    selected_group => (selected_group && selected_group.attributes.title) || '')
+  compute(store, 'title__group__selected__groups', ['group__selected'],
+    group__selected => (group__selected && group__selected.attributes.title) || '')
   return store
 }

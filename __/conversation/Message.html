@@ -1,8 +1,8 @@
 <div class="Message">
-  <header>{{$selected_group_title}}</header>
+  <header>{{$title__group__selected__groups}}</header>
   <div ref:content class="content">
-    {{#if $messages__selected_channel}}
-      {{#each $messages__selected_channel as message}}
+    {{#if $messages__selected__channels}}
+      {{#each $messages__selected__channels as message}}
         <div class="message">
           <!--<div class="close" on:click="__click__close(event, message)">&#10006;</div>-->
           <span class="who">{{message.who}}: </span>
@@ -81,13 +81,13 @@
 <script>
   import {__conversation} from '__/conversation/store.mjs'
   import {__groups} from '__/groups/store.mjs'
-  import {__channels} from '__/channels/store.mjs'
+  import {__selected__channels} from '__/channels/store.mjs'
   export default {
     oncreate() {
       __conversation(this.store)
       __groups(this.store)
-      __channels(this.store)
-      this.store.observe('messages__selected_channel', () => this.refresh__content())
+      __selected__channels(this.store)
+      this.store.observe('messages__selected__channels', () => this.refresh__content())
     },
     methods: {
       refresh__content() {
@@ -105,8 +105,8 @@
           this.store.set({text__message: ''})
           console.info('currentTarget|debug|2', currentTarget)
           const {username} = this.store.get()
-          const selected_channel_id = this.store.get('selected_channel_id')
-          this.store.push__messages__selected_channel(selected_channel_id, {
+          const channel_id__selected__channels = this.store.get('channel_id__selected__channels')
+          this.store.push__messages__selected__channels(channel_id__selected__channels, {
             who: username || 'Anonymous',
             what: value,
             when: Gun.time.is()

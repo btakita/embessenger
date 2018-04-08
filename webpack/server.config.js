@@ -21,7 +21,9 @@ module.exports = {
             cascade: false,
             store: true,
             generate: 'ssr',
-            style
+            preprocess: {
+              style
+            }
           }
         }
       }

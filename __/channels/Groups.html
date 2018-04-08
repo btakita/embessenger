@@ -67,8 +67,8 @@
       }
     },
     computed: {
-      selected_id: $selected_group =>
-        $selected_group && $selected_group.id,
+      selected_id: $group__selected =>
+        $group__selected && $group__selected.id,
       groups__query: (groups, query) =>
         $groups__query(groups, query),
       groups: __groups =>
@@ -76,7 +76,7 @@
     },
     methods: {
       reset() {
-        this.store.set({selected_group: null})
+        this.store.set({group__selected: null})
       },
       __change__input(event) {
         const {currentTarget} = event
@@ -84,8 +84,8 @@
       },
       __click__li(event, group) {
         this.store.set({
-          selected_group:
-            this.store.get('selected_group') == group
+          group__selected:
+            this.store.get('group__selected') == group
             ? null
             : group
         })

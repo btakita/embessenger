@@ -24,13 +24,13 @@
     "nodent-loader": "^1.2.6",
     "npm-run-all": "^4.1.2",
     "polka": "^0.3.4",
-    "sapper": "^0.10.2",
+    "sapper": "^0.10.5",
     "serve-static": "^1.13.2",
-    "svelte": "^1.60.0",
-    "svelte-loader": "^2.6.0",
+    "svelte": "^1.60.2",
+    "svelte-loader": "^2.8.1",
     "svelte-preprocess-sass": "^0.1.0",
-    "webpack": "^4.4.1",
-    "webpack-cli": "^2.0.13",
+    "webpack": "^4.5.0",
+    "webpack-cli": "^2.0.14",
     "webpack-node-externals": "^1.7.2"
   },
   "_moduleAliases": {

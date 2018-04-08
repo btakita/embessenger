@@ -25,9 +25,9 @@
 
 <script>
   import Layout from '__/layout/Layout.html'
-  import {Store} from 'svelte/store'
-  export default {
-    store: () => new Store(),
+  import {$store} from '__/store/lib.mjs'
+	export default {
+    store: $store,
     components: {
       Layout
     },

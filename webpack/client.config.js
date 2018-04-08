@@ -21,7 +21,9 @@ module.exports = {
 						cascade: false,
 						store: true,
 						hotReload: true,
-						style
+						preprocess: {
+							style
+						}
 					}
 				}
 			}
