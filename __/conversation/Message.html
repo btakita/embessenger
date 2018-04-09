@@ -93,17 +93,14 @@
       refresh__content() {
         setTimeout(() => {
           const {content} = this.refs
-          console.debug('content|debug|1', {content, 'this.refs': this.refs})
           if (content) content.scrollTop = content.scrollHeight
         }, 0)
       },
       __keydown__input(event) {
         if (event.key === 'Enter') {
           const currentTarget = event.currentTarget
-          console.info('currentTarget|debug|1', currentTarget)
           const {value} = currentTarget
           this.store.set({text__message: ''})
-          console.info('currentTarget|debug|2', currentTarget)
           const {username} = this.store.get()
           const channel_id__selected__channels = this.store.get('channel_id__selected__channels')
           this.store.push__messages__selected__channels(channel_id__selected__channels, {
@@ -114,8 +111,6 @@
         }
       },
       __click__close(event, message) {
-        console.debug('__click__close')
-        console.debug(message._['#'])
       }
     }
   }

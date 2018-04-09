@@ -32,7 +32,6 @@ export function __selected__channels(store) {
     if (subscription__channel_id__selected__channels__) {
       subscription__channel_id__selected__channels__.off()
     }
-    console.debug('observe|channel_id__selected__channels|debug|1', {channel_id__selected__channels})
     const subscription__channel_id__selected__channels =
             gun.get(channel_id__selected__channels).map().on(message => {
               if (!message) return

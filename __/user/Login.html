@@ -83,7 +83,6 @@
             this.set({err})
             return
           }
-          console.info('auth|debug|1', {ack, user})
           this.store.set({user, userid: ack.alias})
         })
       }
