@@ -1,5 +1,4 @@
-export function __user(store) {
-  if (store.__user) return store
-  store.__user = __user
-  return store
-}
+import {$mixin__store} from '../store/lib.mjs'
+export const __user = $mixin__store('__user', store => {
+
+})

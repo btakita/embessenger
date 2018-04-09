@@ -1,10 +1,8 @@
 import {__groups} from '__/groups/store.mjs'
 import {__gun} from '__/gun/store.mjs'
 import {mixin} from '__/object/lib.mjs'
-import {compute} from '__/store/lib.mjs'
-export function __selected__channels(store) {
-  if (store.__selected__channels) return store
-  store.__selected__channels = __selected__channels
+import {$mixin__store, compute} from '__/store/lib.mjs'
+export const __selected__channels = $mixin__store('__selected__channels', store => {
   __groups(store)
   __gun(store)
   compute(store, 'channel_id__selected__channels', ['group__selected'],
@@ -45,5 +43,4 @@ export function __selected__channels(store) {
       return store.get('gun').get(channel_id__selected__channels).set(message)
     }
   })
-  return store
-}
+})

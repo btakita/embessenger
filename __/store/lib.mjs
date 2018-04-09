@@ -4,6 +4,14 @@ export function $store() {
   if (typeof window === 'object') window.store = store
   return store
 }
+export function $mixin__store(name, init) {
+  return function mixin__store(store) {
+    if (store[name]) return store
+    store[name] = mixin__store
+    init(...arguments)
+    return store
+  }
+}
 // TODO: Inline once https://github.com/sveltejs/svelte/issues/1327 is resolved
 export function compute(store, name, deps, fn) {
   const values__deps = []
