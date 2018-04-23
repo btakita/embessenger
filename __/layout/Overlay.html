@@ -1,16 +1,16 @@
-<div class="handle {{class__open}}" on:click=__click__handle(event)>
+<div class="handle {class__open}" on:click=__click__handle(event)>
   Messaging
 </div>
 
-<div class="sidebar {{class__open}}">
+<div class="sidebar {class__open}">
   <Sidebar></Sidebar>
 </div>
 
-{{#if $group__selected && handle_open}}
+{#if $group__selected && handle_open}
   <div class="message">
     <Message></Message>
   </div>
-{{/if}}
+{/if}
 
 <style type="text/scss" lang="sass">
   .handle {
@@ -57,12 +57,12 @@
   import Message from '__/conversation/Message.html'
   export default {
     computed: {
-      class__open: handle_open =>
+      class__open: ({ handle_open }) =>
         handle_open ? 'open' : ''
     },
     methods: {
       __click__handle(event) {
-        this.set({handle_open: !this.get('handle_open')})
+        this.set({handle_open: !this.get().handle_open})
       }
     },
     components: {

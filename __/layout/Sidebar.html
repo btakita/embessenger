@@ -1,18 +1,14 @@
-<:Component {show}></:Component>
+<svelte:component this={show}></svelte:component>
 
 <script>
   import Groups from '__/channels/Groups.html'
   import Login from '__/user/Login.html'
   export default {
     computed: {
-      show: $username =>
+      show: ({ $username }) =>
         $username ? Groups : Login
 //      show: $user =>
 //        Groups
-    },
-    components: {
-      Groups,
-      Login
     }
   }
 </script>

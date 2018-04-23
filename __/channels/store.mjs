@@ -6,7 +6,8 @@ export const __selected__channels = $mixin__store('__selected__channels', store 
   __groups(store)
   __gun(store)
   compute(store, 'channel_id__selected__channels', ['group__selected'],
-    group__selected => group__selected && `channels/group-${group__selected.id}`)
+    group__selected =>
+      group__selected && `channels/group-${group__selected.id}`)
   compute(store, 'messages__selected__channels', ['message__by__message_id__selected__channels'],
     message__by__message_id__selected__channels => {
       if (!message__by__message_id__selected__channels) return []
@@ -25,8 +26,8 @@ export const __selected__channels = $mixin__store('__selected__channels', store 
   store.observe('channel_id__selected__channels', channel_id__selected__channels => {
     const message__by__message_id__selected__channels = {}
     store.set({message__by__message_id__selected__channels})
-    const gun = store.get('gun')
-    const subscription__channel_id__selected__channels__ = store.get('subscription__channel_id__selected__channels')
+    const {gun} = store.get()
+    const subscription__channel_id__selected__channels__ = store.get().subscription__channel_id__selected__channels
     if (subscription__channel_id__selected__channels__) {
       subscription__channel_id__selected__channels__.off()
     }
@@ -40,7 +41,8 @@ export const __selected__channels = $mixin__store('__selected__channels', store 
   })
   mixin(store, {
     push__messages__selected__channels(channel_id__selected__channels, message) {
-      return store.get('gun').get(channel_id__selected__channels).set(message)
+      const {gun} = store.get()
+      return gun.get(channel_id__selected__channels).set(message)
     }
   })
 })

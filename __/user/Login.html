@@ -5,7 +5,7 @@
     <label for="username">Username</label>
   </div>
   <div class="buttons">
-    <button disabled={{disabled__buttons}} on:click="__click__setname(event, username)">Sign In</button>
+    <button disabled={disabled__buttons} on:click="__click__setname(event, username)">Sign In</button>
   </div>
   <!--<div class="password">-->
     <!--<input type="password" id="password" bind:value=password>-->
@@ -33,10 +33,6 @@
         width: 100%;
       }
     }
-    .error {
-      padding: 0.4rem;
-      background: #FFF0F0;
-    }
   }
 </style>
 
@@ -53,7 +49,7 @@
       __gun(this.store)
     },
     computed: {
-      disabled__buttons: username =>
+      disabled__buttons: ({ username }) =>
         !username
 //      disabled__buttons: (username, password) =>
 //        !username || !password
@@ -74,7 +70,7 @@
         this.auth('auth')
       },
       auth(method) {
-        const gun = this.store.get('gun')
+        const {gun} = this.store.get()
         const {username, password} = this.get()
         const user = gun.user()
         user[method](username, password, ack => {

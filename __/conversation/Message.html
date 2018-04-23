@@ -1,15 +1,15 @@
 <div class="Message">
-  <header>{{$title__group__selected__groups}}</header>
+  <header>{$title__group__selected__groups}</header>
   <div ref:content class="content">
-    {{#if $messages__selected__channels}}
-      {{#each $messages__selected__channels as message}}
+    {#if $messages__selected__channels}
+      {#each $messages__selected__channels as message}
         <div class="message">
           <!--<div class="close" on:click="__click__close(event, message)">&#10006;</div>-->
-          <span class="who">{{message.who}}: </span>
-          <span class="what">{{message.what}}</span>
+          <span class="who">{message.who}: </span>
+          <span class="what">{message.what}</span>
         </div>
-      {{/each}}
-    {{/if}}
+      {/each}
+    {/if}
   </div>
   <div class="input">
     <input
@@ -87,7 +87,11 @@
       __conversation(this.store)
       __groups(this.store)
       __selected__channels(this.store)
-      this.store.observe('messages__selected__channels', () => this.refresh__content())
+    },
+    onupdate({changed, current}) {
+    	if (changed.$messages__selected__channels) {
+    		this.refresh__content()
+      }
     },
     methods: {
       refresh__content() {
@@ -102,7 +106,7 @@
           const {value} = currentTarget
           this.store.set({text__message: ''})
           const {username} = this.store.get()
-          const channel_id__selected__channels = this.store.get('channel_id__selected__channels')
+          const {channel_id__selected__channels} = this.store.get()
           this.store.push__messages__selected__channels(channel_id__selected__channels, {
             who: username || 'Anonymous',
             what: value,
